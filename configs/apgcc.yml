@@ -1,0 +1,41 @@
+
+epochs: 3500
+
+optimization:
+  lr: 0.0001
+  lr_backbone: 0.00001
+  optimizer:
+    clip_max_norm: 0.1
+  scheduler:
+    lr_drop: 3500
+
+loss:
+  parameters:
+    set_cost_class: 1
+    set_cost_point: 0.05
+  coefficients:
+    point_coef: 0.0002
+    eos_coef: 0.5
+
+augmentation:
+  num_crops: 4
+  crop_size: 128
+  min_scale: 0.7
+  max_scale: 1.3
+
+model:
+  backbone: "vgg16_bn"
+  decoder_type: "IFI"
+  frozen_weights: null
+  row: 2
+  line: 2
+  stride: 8
+  auxiliary:
+    aux_enabled: false
+    aux_num_layers: [ 2, 2 ]
+    aux_range: [ 2, 8 ]
+    aux_kwargs:
+      pos_coef: 1.0
+      neg_coef: 1.0
+      pos_loc: 0.0002
+      neg_loc: 0.0002

@@ -185,9 +185,11 @@ class DatasetWithoutLabels(Dataset):
             original_image = cv2.imread(data_path)  # BGR
             assert original_image is not None, 'Image Not Found ' + data_path
 
-        image = cv2.resize(original_image, (self.input_size, self.input_size))
-        image = self.to_tensor(image)
+        # image = cv2.resize(original_image, (self.input_size, self.input_size))
+        image = self.to_tensor(original_image)
         image = self.normalize(image)
+
+        original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
 
         return image, original_image, data_path
 
@@ -209,7 +211,6 @@ def get_dataloader(
 
     dataset = DatasetWithLabels(
         dataset_path=os.path.join("./datasets", f"{split}.txt"),
-        # dataset_path=os.path.join("/home/shcheon/Project/crowd_counting/Dataset", f"{split}_{config.dataset}.txt"),
         split=split,
         input_size=config.input_size,
         transforms=transforms,

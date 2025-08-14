@@ -92,14 +92,17 @@ class FusionCount(nn.Module):
         feat_1 = self.reducer_1(feat_1)
         feat_1 = F.interpolate(feat_1, size=x.shape[-2:], mode="bilinear", align_corners=False)
         output = self.output_layer(feat_1)
-        output = F.avg_pool2d(output, kernel_size=8, stride=8)
+        mu = F.avg_pool2d(output, kernel_size=8, stride=8)
 
         if self.regression:
-            return output
+            B, C, H, W = mu.size()
+            mu_sum = mu.view([B, -1]).sum().unsqueeze(0).unsqueeze(1).unsqueeze(2).unsqueeze(3)
+            mu_normed = mu / (mu_sum + 1e-6)
+            return mu, mu_normed
         else:
-            probs = output.softmax(dim=1)
-            exp = (probs * self.anchor_points.to(output.device)).sum(dim=1, keepdim=True)
+            probs = mu.softmax(dim=1)
+            exp = (probs * self.anchor_points.to(mu.device)).sum(dim=1, keepdim=True)
             if self.training:
-                return output, exp
+                return mu, exp
             else:
                 return exp

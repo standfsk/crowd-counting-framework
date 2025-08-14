@@ -21,19 +21,24 @@ def draw_density_based_result(
     Returns:
         Blended visualization image
     """
+    # BGR -> RGB
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     # Normalize and colormap density
-    density_map = density_map[0, 0].detach().cpu()
-    density_normalized = density_map / density_map.max()
-    density_colored = cv2.applyColorMap(np.uint8(255 * density_normalized), cv2.COLORMAP_JET)
+    density_map = density_map[0, 0].detach().cpu().numpy()
+    density_normalized = cv2.normalize(density_map, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+    density_colored = cv2.applyColorMap(density_normalized, cv2.COLORMAP_JET)
     density_map_final = cv2.resize(density_colored, (image.shape[1], image.shape[0]))
 
-    # Blend original image with density map
-    blended = cv2.addWeighted(image, 0.6, density_map_final, 0.3, 0)
+    # overlay original image with density map
+    mask = density_map_final > 0
+    overlay_weight = 0.6
+    overlay = image.copy()
+    overlay[mask] = cv2.addWeighted(image, 1 - overlay_weight, density_map_final, overlay_weight, 0)[mask]
 
     # Add count text
-    cv2.putText(blended, f'Count: {count}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
-    return density_colored, blended
+    cv2.putText(overlay, f"Count:{count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+    return density_colored, overlay
 
 def draw_point_based_result(
     image: np.ndarray,

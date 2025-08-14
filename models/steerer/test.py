@@ -16,12 +16,9 @@ def test(config: object) -> None:
     t1 = time.time()
     device = "cpu" if config.device == "cpu" else f"cuda:{config.device}"
 
-    if config.save:
-        os.makedirs(os.path.join(config.save_path, "vis"), exist_ok=True)
-
-    if config.log:
-        test_log = open(os.path.join(config.save_path, "log.txt"), "w")
-        test_log.write(f"name,gt,pred\n")
+    os.makedirs(os.path.join(config.save_path, "vis"), exist_ok=True)
+    test_log = open(os.path.join(config.save_path, "log.txt"), "w")
+    test_log.write(f"name,gt,pred\n")
 
     model = STEERER(config).to(device)
     checkpoint = torch.load(config.checkpoint, map_location="cpu")
@@ -42,12 +39,10 @@ def test(config: object) -> None:
             pred_density = output[0] / config.density_factor
             pred_count = pred_density.sum().item()
             pred_counts.append(pred_count)
-            if config.save:
-                density_image, result_image = draw_density_based_result(image=original_image, density_map=pred_density, count=int(pred_count))
-                cv2.imwrite(os.path.join(config.save_path, "vis", image_name), result_image)
 
-            if config.log:
-                test_log.write(f"{image_name},{target_count},{pred_count}\n")
+            density_image, result_image = draw_density_based_result(image=original_image, density_map=pred_density, count=int(pred_count))
+            cv2.imwrite(os.path.join(config.save_path, "vis", image_name), result_image)
+            test_log.write(f"{image_name},{target_count},{pred_count}\n")
 
     t2 = time.time()
     test_log.close()

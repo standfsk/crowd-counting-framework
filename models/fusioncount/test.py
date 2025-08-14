@@ -16,12 +16,9 @@ def test(config: object) -> None:
     t1 = time.time()
     device = "cpu" if config.device == "cpu" else f"cuda:{config.device}"
     
-    if config.save:
-        os.makedirs(os.path.join(config.save_path, "vis"), exist_ok=True)
-
-    if config.log:
-        test_log = open(os.path.join(config.save_path, "log.txt"), "w")
-        test_log.write(f"name,gt,pred\n")
+    os.makedirs(os.path.join(config.save_path, "vis"), exist_ok=True)
+    test_log = open(os.path.join(config.save_path, "log.txt"), "w")
+    test_log.write(f"name,gt,pred\n")
 
     config.bins = [[0.0, 0.0], [1.0, 1.0], [2.0, float("inf")]]
     config.anchor_points = [0.0, 1.0, 2.10737]
@@ -40,15 +37,13 @@ def test(config: object) -> None:
         target_counts.append(target_count)
 
         with torch.set_grad_enabled(False):
-            pred_density = model(input_image)
+            pred_density, _ = model(input_image)
             pred_count = pred_density.detach().cpu().numpy().sum()
             pred_counts.append(pred_count)
-            if config.save:
-                density_image, result_image = draw_density_based_result(image=original_image, density_map=pred_density, count=int(pred_count))
-                cv2.imwrite(os.path.join(config.save_path, "vis", image_name), result_image)
 
-            if config.log:
-                test_log.write(f"{image_name},{target_count},{pred_count}\n")
+            density_image, result_image = draw_density_based_result(image=original_image, density_map=pred_density, count=int(pred_count))
+            cv2.imwrite(os.path.join(config.save_path, "vis", image_name), result_image)
+            test_log.write(f"{image_name},{target_count},{pred_count}\n")
 
     t2 = time.time()
     test_log.close()

@@ -17,12 +17,9 @@ def test(config: object) -> None:
     t1 = time.time()
     device = "cpu" if config.device == "cpu" else f"cuda:{config.device}"
 
-    if config.save:
-        os.makedirs(os.path.join(config.save_path, "vis"), exist_ok=True)
-
-    if config.log:
-        test_log = open(os.path.join(config.save_path, "log.txt"), "w")
-        test_log.write(f"name,gt,pred\n")
+    os.makedirs(os.path.join(config.save_path, "vis"), exist_ok=True)
+    test_log = open(os.path.join(config.save_path, "log.txt"), "w")
+    test_log.write(f"name,gt,pred\n")
 
     model = CLTR(config).to(device)
     checkpoint = torch.load(config.checkpoint, map_location="cpu")
@@ -46,12 +43,10 @@ def test(config: object) -> None:
             pred_points = get_points(original_image, out_logits, out_point, config.crop_size, config.num_queries)
             pred_count = len(pred_points)
             pred_counts.append(pred_count)
-            if config.save:
-                result_image = draw_point_based_result(image=original_image, points=pred_points, count=int(pred_count))
-                cv2.imwrite(os.path.join(config.save_path, "vis", image_name), result_image)
 
-            if config.log:
-                test_log.write(f"{image_name},{target_count},{pred_count}\n")
+            result_image = draw_point_based_result(image=original_image, points=pred_points, count=int(pred_count))
+            cv2.imwrite(os.path.join(config.save_path, "vis", image_name), result_image)
+            test_log.write(f"{image_name},{target_count},{pred_count}\n")
 
     t2 = time.time()
     test_log.close()

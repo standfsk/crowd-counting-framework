@@ -20,7 +20,7 @@ def evaluate(
         target_counts.append([len(p) for p in target_points])
 
         with torch.set_grad_enabled(False):
-            pred_density = model(input_image)
+            pred_density, _ = model(input_image)
             pred_counts.append(pred_density.sum(dim=(1, 2, 3)).cpu().numpy().tolist())
 
     pred_counts = np.array([item for sublist in pred_counts for item in sublist])

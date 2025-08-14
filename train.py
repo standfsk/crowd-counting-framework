@@ -33,7 +33,7 @@ def main() -> None:
     print(f"Using {args.nprocs} GPUs.")
 
     # save path
-    args.save_path = os.path.join("output", args.save_path)
+    args.save_path = os.path.join("output", "train", args.save_path)
 
     # update_config
     config = update_config(args).flatten()

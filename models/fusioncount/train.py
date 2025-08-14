@@ -41,14 +41,14 @@ def train(
                         pred_class, pred_density = model(input_image)
                         loss, loss_info = loss_fn(pred_class, pred_density, target_density, target_points)
                     else:
-                        pred_density = model(input_image)
+                        pred_density, _ = model(input_image)
                         loss, loss_info = loss_fn(pred_density, target_density, target_points)
             else:
                 if not regression:
                     pred_class, pred_density = model(input_image)
                     loss, loss_info = loss_fn(pred_class, pred_density, target_density, target_points)
                 else:
-                    pred_density = model(input_image)
+                    pred_density, _ = model(input_image)
                     loss, loss_info = loss_fn(pred_density, target_density, target_points)
             pred_counts.append(pred_density.sum(dim=(1, 2, 3)).detach().cpu().numpy().tolist())
 

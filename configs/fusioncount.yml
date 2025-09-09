@@ -53,3 +53,4 @@ augmentation:
 
 model:
   backbone: "vgg16_bn"
+  state_dict: None

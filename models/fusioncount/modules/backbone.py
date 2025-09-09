@@ -1,8 +1,9 @@
-from typing import List
+from typing import List, Union, Optional
 
 import timm
 import torch
 from torch import nn, Tensor
+from collections import OrderedDict
 
 model_cfgs = {
     "vgg11": [64, "M", 128, "M", 256, 256, "M", 512, 512, "M", 512, 512],
@@ -16,10 +17,12 @@ model_cfgs = {
 }
 
 class VGG(nn.Module):
-    def __init__(self, backbone: str, pretrained: bool = True) -> None:
+    def __init__(self, backbone: str, pretrained: bool = True, state_dict: Optional[OrderedDict] = None) -> None:
         super(VGG, self).__init__()
         self.model_cfgs = model_cfgs
         encoder = timm.create_model(backbone, pretrained=pretrained, features_only=True, out_indices=(-2,))
+        if state_dict:
+            encoder.load_state_dict(state_dict)
         self.encoder = self.assemble_modules(list(encoder.children()))
         self.start_idx = 2
         self.end_idx = len(self.encoder)

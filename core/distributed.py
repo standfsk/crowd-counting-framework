@@ -40,8 +40,8 @@ def reduce_dict(input_dict: Dict[str, Tensor], nprocs: int) -> dict:
             values.append(input_dict[k])
         values = torch.stack(values, dim=0)
         reduce_mean(values, nprocs)
-        reduce_dict = {k:v for k,v in zip(names, values)}
-    return reduce_dict
+        reduced_dict = {k:v for k,v in zip(names, values)}
+    return reduced_dict
 
 def setup(local_rank: int, nprocs: int) -> None:
     if nprocs > 1:

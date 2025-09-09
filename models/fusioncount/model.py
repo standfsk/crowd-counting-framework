@@ -1,5 +1,6 @@
 from typing import List, Tuple, Dict, Union
 
+import os
 import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
@@ -14,8 +15,12 @@ class FusionCount(nn.Module):
         self.regression = config.regression
         self.bins = config.bins
         self.anchor_points = config.anchor_points
+        if os.path.exists(config.state_dict):
+            self.state_dict = config.state_dict
+        else:
+            self.state_dict = None
 
-        self.backbone_model = vgg(backbone=self.backbone, pretrained=True)
+        self.backbone_model = vgg(backbone=self.backbone, pretrained=True, state_dict=self.state_dict)
         self.backbone_config = self.get_channel_list(self.backbone_model.model_cfgs[self.backbone])
 
         batch_norm = False

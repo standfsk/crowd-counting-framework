@@ -16,6 +16,7 @@ This repository provides an integrated process for training and evaluating multi
 | DMCount     | MIT  | [DMCount](https://github.com/cvlab-stonybrook/DM-Count) |
 | FusionCount | MIT  | [FusionCount](https://github.com/Yiming-M/FusionCount) |
 | STEERER     | MIT  | [STEERER](https://github.com/taohan10200/STEERER) |
+| FFNet     | MIT  | [FFNet](https://github.com/erdongsanshi/Fuss-Free-structure) |
 
 ## Supported Datasets
 - ShanghaiTech A & B
@@ -42,12 +43,12 @@ python prepare.py
 
 ## Train
 ```
-python train.py --dataset sha --save-path train --network apgcc
+python train.py --save-path train --network apgcc
 ```
 
 ## Test
 ```
-python test.py --dataset sha --save-path test --network apgcc --checkpoint output/train/best.pt --device 0 --save --log 
+python test.py --save-path test --network apgcc --checkpoint output/train/best.pt --device 0 --save --log 
 ```
 
 ## Export
@@ -64,6 +65,7 @@ Full credit goes to original authors of supported models
 - [DMCount](https://github.com/cvlab-stonybrook/DM-Count)
 - [FusionCount](https://github.com/Yiming-M/FusionCount)
 - [STEERER](https://github.com/taohan10200/STEERER)
+- [FFNet](https://github.com/erdongsanshi/Fuss-Free-structure)
 
 
 

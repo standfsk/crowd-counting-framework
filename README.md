@@ -16,7 +16,7 @@ This repository provides an integrated process for training and evaluating multi
 | DMCount     | MIT  | [DMCount](https://github.com/cvlab-stonybrook/DM-Count) |
 | FusionCount | MIT  | [FusionCount](https://github.com/Yiming-M/FusionCount) |
 | STEERER     | MIT  | [STEERER](https://github.com/taohan10200/STEERER) |
-| FFNet     | MIT  | [FFNet](https://github.com/erdongsanshi/Fuss-Free-structure) |
+| FFNet     | Unavailable  | [FFNet](https://github.com/erdongsanshi/Fuss-Free-structure) |
 
 ## Supported Datasets
 - ShanghaiTech A & B

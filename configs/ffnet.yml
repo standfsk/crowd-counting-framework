@@ -2,14 +2,6 @@
 epochs: 1000
 reduction: 8
 regression: True
-bins:
-  - [0.0, 0.0]
-  - [1.0, 1.0]
-  - [2.0, .inf]
-anchor_points:
-  - 0.0
-  - 1.0
-  - 2.10737
 
 optimization:
   lr: 0.0001
@@ -52,5 +44,9 @@ augmentation:
     noise_prob: 0.5
 
 model:
-  backbone: "vgg16_bn"
+  backbone: "ConvNeXt_Tiny"
+  num_filters:
+    - 16
+    - 32
+    - 64
   state_dict: ""

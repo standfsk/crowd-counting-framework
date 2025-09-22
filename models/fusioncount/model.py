@@ -16,11 +16,11 @@ class FusionCount(nn.Module):
         self.bins = config.bins
         self.anchor_points = config.anchor_points
         if os.path.exists(config.state_dict):
-            self.state_dict = config.state_dict
+            state_dict = config.state_dict
         else:
-            self.state_dict = None
+            state_dict = None
 
-        self.backbone_model = vgg(backbone=self.backbone, pretrained=True, state_dict=self.state_dict)
+        self.backbone_model = vgg(backbone=self.backbone, pretrained=True, state_dict=state_dict)
         self.backbone_config = self.get_channel_list(self.backbone_model.model_cfgs[self.backbone])
 
         batch_norm = False

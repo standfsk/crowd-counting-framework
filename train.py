@@ -11,13 +11,12 @@ from core.utils import update_config
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='Train')
-    parser.add_argument('--dataset', type=str, required=True, help="dataset name")
     parser.add_argument('--save-path', type=str, required=True, help="save path")
     parser.add_argument('--batch-size', type=int, default=4, help="Batch size for training")
     parser.add_argument('--num-workers', type=int, default=4, help="Number of worker processes for data loading.")
     parser.add_argument('--input-size', type=int, default=512, help="input image size")
     parser.add_argument('--network', type=str, required=True,
-                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'p2pnet', 'steerer'],
+                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'steerer', 'ffnet'],
                         help="Model architecture to use.")
     parser.add_argument('--eval-start', type=int, default=0, help="Epoch to start evaluation.")
     parser.add_argument('--eval-freq', type=int, default=1, help="Frequency (in epochs) to run evaluation.")

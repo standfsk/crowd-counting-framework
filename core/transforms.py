@@ -284,7 +284,7 @@ class CustomCompose:
 
 # noinspection PyTypeChecker
 def get_transforms(config: object) -> CustomCompose:
-    if config.network in ["dmcount", "fusioncount"]:
+    if config.network in ["dmcount", "fusioncount", "ffnet"]:
         transforms = CustomCompose([
             RandomResizedCrop((config.input_size, config.input_size), scale=(config.min_scale, config.max_scale)),
             RandomHorizontalFlip(),

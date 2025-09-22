@@ -14,3 +14,7 @@ timm==1.0.14
 numpy
 tqdm
 scipy
+torch
+torchvision
+torchaudio
+dict-recursive-update

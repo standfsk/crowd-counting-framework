@@ -17,7 +17,7 @@ def main() -> None:
     parser.add_argument('--num-workers', type=int, default=4, help="Number of worker processes for data loading.")
     parser.add_argument('--input-size', type=int, nargs=2, default=(640, 640), help="input image size")
     parser.add_argument('--network', type=str, required=True,
-                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'p2pnet'],
+                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'steerer', 'ffnet'],
                         help="Model architecture to use.")
     parser.add_argument('--backbone', type=str, required=True, help="Backbone network for the model.")
     parser.add_argument('--checkpoint', type=str, required=True, help="checkpoint path")
@@ -33,6 +33,7 @@ def run(args: argparse.Namespace) -> None:
     input_tensor = torch.zeros((1, 3, input_size[1], input_size[0])).to(device)
 
     config = update_config(args).flatten()
+    config.state_dict = ""
     model = getattr(models, args.network)(config)
     state_dict = torch.load(args.checkpoint, map_location='cpu')
     new_state_dict = {}

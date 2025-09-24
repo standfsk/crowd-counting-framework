@@ -3,7 +3,8 @@ from typing import Tuple
 from torch import Tensor, nn
 
 from .modules import Backbone, ccsm, Fusion
-
+import warnings
+warnings.filterwarnings("ignore", message="Grad strides do not match bucket view strides.*")
 
 class FFNet(nn.Module):
     def __init__(self, config: object) -> None:

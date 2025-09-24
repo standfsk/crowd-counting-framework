@@ -126,9 +126,12 @@ class Fusion(nn.Module):
         x2 = self.upsample_1(x2)
         x3 = self.upsample_2(x3)
 
+        target_size = x1.shape[2:]
+        x2 = F.interpolate(x2, size=target_size, mode="bilinear", align_corners=False)
+        x3 = F.interpolate(x3, size=target_size, mode="bilinear", align_corners=False)
+
         x = torch.cat([x1, x2, x3], dim=1)
         x = self.final(x)
-
         return x
 
 

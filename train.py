@@ -16,7 +16,7 @@ def main() -> None:
     parser.add_argument('--num-workers', type=int, default=4, help="Number of worker processes for data loading.")
     parser.add_argument('--input-size', type=int, default=512, help="input image size")
     parser.add_argument('--network', type=str, required=True,
-                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'steerer', 'ffnet'],
+                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'p2pnet', 'steerer', 'ffnet'],
                         help="Model architecture to use.")
     parser.add_argument('--eval-start', type=int, default=0, help="Epoch to start evaluation.")
     parser.add_argument('--eval-freq', type=int, default=1, help="Frequency (in epochs) to run evaluation.")

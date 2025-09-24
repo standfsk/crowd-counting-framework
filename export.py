@@ -17,7 +17,7 @@ def main() -> None:
     parser.add_argument('--num-workers', type=int, default=4, help="Number of worker processes for data loading.")
     parser.add_argument('--input-size', type=int, nargs=2, default=(640, 640), help="input image size [width, height]")
     parser.add_argument('--network', type=str, required=True,
-                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'p2pnet'],
+                        choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'steerer', 'ffnet'],
                         help="Model architecture to use.")
     parser.add_argument('--backbone', type=str, required=True, help="Backbone network for the model.")
     parser.add_argument('--checkpoint', type=str, required=True, help="checkpoint path")

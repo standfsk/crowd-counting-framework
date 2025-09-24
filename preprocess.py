@@ -163,7 +163,7 @@ def _shanghaitech(
     max_size: int,
     generate_npy: bool = False
 ) -> None:
-    for split in ["train", "val"]:
+    for split in ["train", "valid"]:
         generate_npy = generate_npy and split == "train"
         print(f"Processing {split}...")
         if split == "train":
@@ -214,7 +214,7 @@ def _nwpu(
     max_size: int,
     generate_npy: bool = False
 ) -> None:
-    for split in ["train", "val"]:
+    for split in ["train", "valid"]:
         generate_npy = generate_npy and split == "train"
         print(f"Processing {split}...")
         with open(os.path.join(data_src_dir, f"{split}.txt"), "r") as f:
@@ -280,7 +280,7 @@ def _qnrf(
     max_size: int,
     generate_npy: bool = False
 ) -> None:
-    for split in ["train", "val"]:
+    for split in ["train", "valid"]:
         generate_npy = generate_npy and split == "train"
         print(f"Processing {split}...")
         if split == "train":
@@ -331,7 +331,7 @@ def _jhu(
     max_size: int,
     generate_npy: bool = False
 ) -> None:
-    for split in ["train", "val"]:
+    for split in ["train", "valid"]:
         generate_npy = generate_npy and split == "train"
         if split == "train":
             with open(os.path.join(data_src_dir, "train", "image_labels.txt"), "r") as f:
@@ -340,14 +340,14 @@ def _jhu(
             train_image_src_paths = [os.path.join(data_src_dir, "train", "images", f"{name}.jpg") for name in train_names]
             train_label_src_paths = [os.path.join(data_src_dir, "train", "gt", f"{name}.txt") for name in train_names]
 
-            with open(os.path.join(data_src_dir, "val", "image_labels.txt"), "r") as f:
-                val_names = f.read().splitlines()
-            val_names = [name.split(",")[0] for name in val_names]
-            val_image_src_paths = [os.path.join(data_src_dir, "val", "images", f"{name}.jpg") for name in val_names]
-            val_label_src_paths = [os.path.join(data_src_dir, "val", "gt", f"{name}.txt") for name in val_names]
+            with open(os.path.join(data_src_dir, "valid", "image_labels.txt"), "r") as f:
+                valid_names = f.read().splitlines()
+            valid_names = [name.split(",")[0] for name in valid_names]
+            valid_image_src_paths = [os.path.join(data_src_dir, "valid", "images", f"{name}.jpg") for name in valid_names]
+            valid_label_src_paths = [os.path.join(data_src_dir, "valid", "gt", f"{name}.txt") for name in valid_names]
 
-            image_src_paths = train_image_src_paths + val_image_src_paths
-            label_src_paths = train_label_src_paths + val_label_src_paths
+            image_src_paths = train_image_src_paths + valid_image_src_paths
+            label_src_paths = train_label_src_paths + valid_label_src_paths
 
         else:
             with open(os.path.join(data_src_dir, "test", "image_labels.txt"), "r") as f:

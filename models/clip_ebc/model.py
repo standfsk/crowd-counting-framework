@@ -7,7 +7,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn, Tensor
 
-from . import modules
 from .utils import format_count, _init_weights, make_resnet_layers, Bottleneck, BasicBlock
 
 curr_dir = os.path.abspath(os.path.dirname(__file__))
@@ -43,6 +42,7 @@ class CLIP_EBC(nn.Module):
         decoder_cfg: Optional[List[Union[str, int]]] = None,
     ) -> None:
         super().__init__()
+        from . import modules
         assert backbone in resnet_backbones + vit_backbones, f"Backbone should be in {resnet_backbones + vit_backbones}, got {backbone}"
         if not os.path.exists(os.path.join(curr_dir, "modules", "weights", f"clip_{backbone}.pth")) or not os.path.exists(os.path.join(curr_dir, "modules", "configs", f"clip_{backbone}.json")):
             modules.prepare(backbone)

@@ -209,6 +209,8 @@ def get_dataloader(
     else:
         transforms = None
 
+    split = "valid" if split == "val" else split
+
     dataset = DatasetWithLabels(
         dataset_path=os.path.join("./datasets", f"{split}.txt"),
         split=split,

@@ -19,7 +19,6 @@ def main() -> None:
     parser.add_argument('--network', type=str, required=True,
                         choices=['apgcc', 'clip_ebc', 'cltr', 'dmcount', 'fusioncount', 'steerer', 'ffnet'],
                         help="Model architecture to use.")
-    parser.add_argument('--backbone', type=str, required=True, help="Backbone network for the model.")
     parser.add_argument('--checkpoint', type=str, required=True, help="checkpoint path")
     parser.add_argument('--device', default="cpu", help="device to use. either gpu_id or cpu")
     args = parser.parse_args()
